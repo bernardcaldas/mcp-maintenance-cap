@@ -15,7 +15,7 @@ const sapClient = axios.create({
 
 function buildFilter(p) {
     const f = []
-    if (p.plant) f.push(`Plant eq '${p.plant}'`)
+    if (p.plant) f.push(`MaintenancePlant eq '${p.plant}'`)
     if (p.orderType) f.push(`MaintenanceOrderType eq '${p.orderType}'`)
     if (p.equipment) f.push(`Equipment eq '${p.equipment}'`)
     if (p.functionalLocation) f.push(`FunctionalLocation eq '${p.functionalLocation}'`)
@@ -46,12 +46,16 @@ function formatOrder(o) {
 
 async function getMaintenanceOrders(p) {
     const params = {
-        $top: Math.min(parseInt(p.top) || 3, 50),
+        $top: Math.min(parseInt(p.top) || 10, 50),
+        $orderby: 'MaintenanceOrder desc',
+        $select: 'MaintenanceOrder,MaintenanceOrderDesc,MaintenanceOrderType,MaintenancePlant,Equipment,EquipmentName,FunctionalLocation,SystemStatusText,MaintPriority,MaintOrdBasicStartDate,MaintOrdBasicEndDate,MainWorkCenter,MaintenanceActivityType,CompanyCode,CostCenter'
     }
+    const filter = buildFilter(p)
+    if (filter) params.$filter = filter
 
     const res = await sapClient.get('/MaintenanceOrder', { params })
     const orders = res.data?.d?.results || []
-    return { total: orders.length, orders: orders.map(formatOrder) } // retorna só o primeiro pra ver os campos
+    return { total: orders.length, orders: orders.map(formatOrder) }
 }
 
 async function getMaintenanceOrderDetail(p) {
