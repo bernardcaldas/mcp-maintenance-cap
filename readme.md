@@ -1,166 +1,163 @@
-# mcp-maintenance-cap
+# SAP Maintenance Orders — Consulta por Linguagem Natural com IA
 
-MCP Server para Ordens de Manutenção SAP S/4HANA, deployado no SAP BTP (Cloud Foundry).
+> Imagine perguntar ao seu assistente de IA: *"Quais ordens de manutenção estão abertas na planta 1710 com prioridade alta?"* — e receber a resposta direto do SAP, em segundos, sem abrir nenhuma transação.
 
-Expõe dados do [SAP Business Accelerator Hub](https://api.sap.com) via protocolo MCP, permitindo que clientes como Claude Desktop consultem ordens de manutenção em linguagem natural.
+**É exatamente isso que este projeto faz.**
 
----
-
-## Arquitetura
-
-```
-Claude Desktop (MCP Client)
-        │
-        │  HTTP/MCP
-        ▼
-SAP BTP Cloud Foundry
-  └── mcp-maintenance-cap (CAP + Express)
-        │  GET/POST /mcp/*
-        │
-        │  OData REST
-        ▼
-SAP Business Accelerator Hub
-  └── API_MAINTENANCEORDER (sandbox S/4HANA)
-```
-
-**Stack:**
-- [SAP CAP](https://cap.cloud.sap) — framework base (bootstrap/roteamento)
-- Express — rotas MCP registradas via hook `cds.on('bootstrap')`
-- Axios — cliente HTTP para a API OData do SAP
-- SAP BTP Cloud Foundry — hospedagem
+![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?logo=node.js&logoColor=white)
+![SAP BTP](https://img.shields.io/badge/SAP%20BTP-Cloud%20Foundry-0070F2?logo=sap&logoColor=white)
+![SAP CAP](https://img.shields.io/badge/SAP%20CAP-8.x-0070F2?logo=sap&logoColor=white)
+![Status](https://img.shields.io/badge/status-live%20on%20BTP-brightgreen)
 
 ---
 
-## Estrutura do Projeto
+## Demo
+
+> **Adicionar aqui:** GIF ou vídeo curto mostrando o Claude Desktop consultando ordens de manutenção em linguagem natural.
+
+<!-- Exemplo do que colocar:
+![Demo](docs/demo.gif)
+-->
+
+> **Adicionar aqui:** Screenshot da resposta real retornada (Postman ou Claude Desktop).
+
+<!-- Exemplo:
+![Postman](docs/postman-response.png)
+-->
+
+---
+
+## O Problema que Resolve
+
+Gestores de manutenção, coordenadores e técnicos de campo precisam de informações do SAP diariamente — status de ordens, prioridades, histórico de equipamentos. Para isso, precisam:
+
+- Ter acesso ao SAP GUI ou Fiori
+- Conhecer a transação correta (IW38, IW39...)
+- Saber filtrar e navegar pelas telas
+
+**Resultado:** informação travada atrás de um sistema complexo, dependência de perfis técnicos para consultas simples, tempo perdido.
+
+Com este projeto, qualquer pessoa com acesso ao assistente de IA pode consultar esses dados em linguagem natural — sem treinamento no SAP, sem navegar em telas.
+
+---
+
+## Como Funciona
+
+```mermaid
+flowchart LR
+    A[Usuário] -->|pergunta em português| B[Claude Desktop]
+    B -->|chama tool MCP| C[MCP Server no SAP BTP]
+    C -->|consulta OData| D[SAP S/4HANA]
+    D -->|dados reais| C
+    C -->|resposta estruturada| B
+    B -->|responde em português| A
+```
+
+O servidor MCP fica hospedado no **SAP BTP Cloud Foundry** e funciona como uma ponte: recebe perguntas da IA, consulta a API do SAP e devolve os dados formatados.
+
+---
+
+## Exemplos de Perguntas que Já Funcionam
 
 ```
-srv/
-  server.js        ← entry point: registra as rotas no bootstrap do CAP
-  mcp-handler.js   ← lógica das tools e rotas Express (/mcp/*)
-  mcp-service.cds  ← placeholder CDS obrigatório para o CAP inicializar
-manifest.yml       ← configuração de deploy no Cloud Foundry (sem segredos)
+"Liste as últimas 5 ordens de manutenção da planta 1710"
+
+"Qual o status da ordem 4000300?"
+
+"Mostre as operações planejadas para a ordem 4000291"
+
+"Quais ordens do tipo YA02 estão abertas?"
+
+"Detalhe a ordem de manutenção do equipamento 217100091"
 ```
 
 ---
 
-## Tools disponíveis
+## O que Pode Ser Construído com Essa Abordagem
 
-| Tool | Descrição |
-|------|-----------|
-| `get_maintenance_orders` | Lista ordens de manutenção com filtros opcionais |
-| `get_maintenance_order_detail` | Detalhe de uma ordem específica |
-| `get_maintenance_order_operations` | Operações de uma ordem |
+Este projeto é uma prova de conceito funcional e serve de base para soluções reais. Com a mesma arquitetura é possível integrar:
+
+| Módulo SAP | O que a IA poderia responder |
+|------------|------------------------------|
+| **PM** — Plant Maintenance | Ordens, equipamentos, histórico de falhas |
+| **MM** — Materials Management | Estoque, pedidos de compra, fornecedores |
+| **SD** — Sales & Distribution | Pedidos de venda, entregas, faturamento |
+| **QM** — Quality Management | Inspeções, notificações de qualidade |
+| **FI/CO** — Financeiro | Centros de custo, lançamentos, relatórios |
 
 ---
 
-## Endpoints
+## Serviços que Ofereço
 
-| Método | Path | Descrição |
-|--------|------|-----------|
-| `GET` | `/mcp/health` | Health check da aplicação |
-| `GET` | `/mcp/tools` | Lista as tools disponíveis |
-| `POST` | `/mcp/call` | Executa uma tool |
+Se você é de uma consultoria SAP ou empresa que quer explorar essa capacidade:
 
-### Exemplo — listar ordens
+- **Prova de conceito** — MCP Server funcional integrado ao seu módulo SAP em poucos dias
+- **Integração com Claude Desktop, Copilot ou outros clientes MCP** — o usuário final usa a IA que já conhece
+- **Deploy no SAP BTP ou infraestrutura do cliente** — seguro, sem dados saindo do ambiente controlado
+- **Expansão para múltiplos módulos** — uma vez que a arquitetura está pronta, adicionar novos dados é rápido
+
+> Interessado? Entre em contato: **bernardo.acaldas@gmail.com**
+
+---
+
+## Evidências do Projeto em Produção
+
+> **Adicionar aqui:** Screenshot do `cf apps` mostrando a app `running` no BTP.
+
+<!-- ![BTP Running](docs/btp-running.png) -->
+
+> **Adicionar aqui:** Screenshot do health check respondendo na URL pública.
+
+<!-- ![Health Check](docs/health-check.png) -->
+
+---
+
+## Stack Técnica
+
+| Camada | Tecnologia |
+|--------|-----------|
+| Framework | SAP CAP (Cloud Application Programming) |
+| Servidor | Node.js + Express |
+| Protocolo | MCP (Model Context Protocol) |
+| API SAP | OData REST via SAP Business Accelerator Hub |
+| Hospedagem | SAP BTP Cloud Foundry |
+| Cliente IA | Claude Desktop (Anthropic) |
+
+---
+
+## Rodar Localmente
 
 ```bash
-curl -X POST https://<sua-app>.cfapps.us10-001.hana.ondemand.com/mcp/call \
-  -H "Content-Type: application/json" \
-  -d '{"tool": "get_maintenance_orders", "input": {"top": 5}}'
-```
-
-### Exemplo — detalhe de uma ordem
-
-```bash
-curl -X POST https://<sua-app>.cfapps.us10-001.hana.ondemand.com/mcp/call \
-  -H "Content-Type: application/json" \
-  -d '{"tool": "get_maintenance_order_detail", "input": {"maintenanceOrder": "4000300"}}'
-```
-
-### Exemplo — operações de uma ordem
-
-```bash
-curl -X POST https://<sua-app>.cfapps.us10-001.hana.ondemand.com/mcp/call \
-  -H "Content-Type: application/json" \
-  -d '{"tool": "get_maintenance_order_operations", "input": {"maintenanceOrder": "4000300", "top": 10}}'
-```
-
----
-
-## Configuração e Deploy
-
-### Pré-requisitos
-
-- Node.js 20+
-- [CF CLI](https://docs.cloudfoundry.org/cf-cli/)
-- Conta no SAP BTP (trial funciona)
-- API Key do [SAP Business Accelerator Hub](https://api.sap.com)
-
-### Rodar local
-
-```bash
+git clone https://github.com/bernardcaldas/mcp-maintenance-cap.git
+cd mcp-maintenance-cap
 npm install
 npm run dev
-# Disponível em http://localhost:4004
 ```
 
-### Deploy no BTP
+Testar:
+
+```bash
+curl -X POST http://localhost:4004/mcp/call \
+  -H "Content-Type: application/json" \
+  -d '{"tool": "get_maintenance_orders", "input": {"top": 3}}'
+```
+
+---
+
+## Deploy no SAP BTP
 
 ```bash
 cf login -a https://api.cf.us10-001.hana.ondemand.com
 cf push mcp-maintenance-cap
-```
-
-### Setar a API Key (obrigatório após o deploy)
-
-**Nunca coloque a API Key no manifest.yml ou no código.** Configure via variável de ambiente no CF:
-
-```bash
 cf set-env mcp-maintenance-cap SAP_API_KEY "sua-chave-aqui"
 cf restart mcp-maintenance-cap
 ```
 
-A chave fica armazenada apenas no ambiente do CF, fora do repositório.
+A API Key é obtida gratuitamente no [SAP Business Accelerator Hub](https://api.sap.com).
 
 ---
 
-## Lições Aprendidas
-
-Esta seção registra decisões arquiteturais não óbvias para reutilização em projetos similares.
-
-### 1. Não usar CDS service para expor rotas MCP
-
-A abordagem natural no CAP seria definir funções/actions no `.cds` e implementá-las em um service handler. Isso **não funciona bem** para um MCP server porque:
-
-- O CAP adiciona prefixos de namespace nas rotas (`/odata/v4/McpService/health` em vez de `/mcp/health`)
-- O protocolo MCP espera rotas simples e controle total do formato de resposta
-- O CAP serializa respostas OData, não JSON puro
-
-**Solução:** usar o hook `cds.on('bootstrap', app => ...)` para registrar rotas Express diretamente, mantendo o CAP apenas como framework de inicialização.
-
-### 2. Adicionar `express.json()` manualmente
-
-O CAP não registra o middleware de parsing de JSON para rotas customizadas. Sem ele, `req.body` chega `undefined` e o campo `tool` não é lido — gerando erro 400 mesmo com o body correto.
-
-**Solução:** adicionar no início do handler:
-
-```js
-app.use(require('express').json())
-```
-
-### 3. O arquivo .cds não pode ser removido
-
-O CAP exige ao menos um arquivo `.cds` válido para inicializar. Sem ele, o servidor não sobe.
-
-**Solução:** manter um `DummyService` mínimo no `.cds` como placeholder.
-
-### 4. API Key nunca no repositório
-
-O `manifest.yml` vai para o repositório com `SAP_API_KEY: ""` vazio. A chave real é configurada via `cf set-env` após o deploy e fica apenas no ambiente do CF.
-
----
-
-## Uso com Claude Desktop (MCP Client)
+## Conectar ao Claude Desktop
 
 Adicione no `claude_desktop_config.json`:
 
@@ -168,20 +165,27 @@ Adicione no `claude_desktop_config.json`:
 {
   "mcpServers": {
     "sap-maintenance": {
-      "url": "https://<sua-app>.cfapps.us10-001.hana.ondemand.com"
+      "url": "https://mcp-maintenance-cap.cfapps.us10-001.hana.ondemand.com"
     }
   }
 }
 ```
 
-Após configurar, o Claude Desktop reconhece as tools e você pode perguntar diretamente:
-> *"Liste as últimas ordens de manutenção da planta 1710"*
-
 ---
 
-## Variáveis de Ambiente
+<details>
+<summary><strong>Lições Aprendidas (referência técnica)</strong></summary>
 
-| Variável | Descrição | Padrão |
-|----------|-----------|--------|
-| `SAP_API_KEY` | API Key do SAP Business Accelerator Hub | *(obrigatório)* |
-| `SAP_API_BASE` | URL base da API OData | sandbox S/4HANA |
+### 1. Não usar CDS service para expor rotas MCP
+O CAP adiciona prefixos OData nas rotas e serializa respostas no formato OData — incompatível com o protocolo MCP. A solução foi registrar rotas Express diretamente via `cds.on('bootstrap', app => ...)`.
+
+### 2. Adicionar `express.json()` manualmente
+O CAP não registra esse middleware para rotas customizadas. Sem ele, `req.body` chega `undefined` mesmo com `Content-Type: application/json` no header.
+
+### 3. Manter um arquivo .cds válido
+O CAP exige ao menos um `.cds` para inicializar. Solução: `DummyService` mínimo como placeholder.
+
+### 4. API Key fora do repositório
+`manifest.yml` vai para o repo com `SAP_API_KEY: ""`. A chave real é configurada via `cf set-env` após o deploy.
+
+</details>
