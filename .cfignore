@@ -1,0 +1,13 @@
+node_modules/
+.git/
+.env
+.env.bak
+.vscode/
+*.sqlite
+target/
+_out/
+gen/
+mta_archives/
+*_mta_build_tmp
+*.mtar
+@cds-models

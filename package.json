@@ -1,0 +1,26 @@
+{
+    "name": "mcp-maintenance-cap",
+    "version": "1.0.0",
+    "description": "MCP Server para Ordens de Manutenção SAP S/4HANA",
+    "scripts": {
+        "start": "cds-serve",
+        "dev": "cds watch"
+    },
+    "engines": {
+        "node": "20.x"
+    },
+    "dependencies": {
+        "@sap/cds": "^8",
+        "axios": "^1.6.7",
+        "express": "^4"
+    },
+    "devDependencies": {
+        "@cap-js/sqlite": "^1",
+        "dotenv": "^16.4.5"
+    },
+    "cds": {
+        "requires": {
+            "auth": "dummy"
+        }
+    }
+}

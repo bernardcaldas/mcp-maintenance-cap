@@ -1,0 +1,9 @@
+---
+applications:
+  - name: mcp-maintenance-cap
+    memory: 256M
+    buildpacks:
+      - nodejs_buildpack
+    env:
+      SAP_API_KEY: ""
+      SAP_API_BASE: "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_MAINTENANCEORDER"
