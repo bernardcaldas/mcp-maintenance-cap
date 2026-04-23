@@ -13,17 +13,16 @@
 
 ## Demo
 
-> **Adicionar aqui:** GIF ou vídeo curto mostrando o Claude Desktop consultando ordens de manutenção em linguagem natural.
+<!-- GIF coming soon -->
+> GIF demonstrating Claude Desktop querying SAP maintenance orders in natural language — coming soon.
 
-<!-- Exemplo do que colocar:
-![Demo](docs/demo.gif)
--->
+**Questions used in the demo:**
 
-> **Adicionar aqui:** Screenshot da resposta real retornada (Postman ou Claude Desktop).
+> *"Is there any order related to a leak? What is planned to fix it?"*
 
-<!-- Exemplo:
-![Postman](docs/postman-response.png)
--->
+> *"I have a meeting now about the EDDY Pumps. Give me a quick summary of all open orders for them."*
+
+Both answered in seconds — no SAP transaction opened, no filter configured, no technical knowledge required.
 
 ---
 
@@ -46,29 +45,33 @@ Com este projeto, qualquer pessoa com acesso ao assistente de IA pode consultar 
 ```mermaid
 flowchart LR
     A[Usuário] -->|pergunta em português| B[Claude Desktop]
-    B -->|chama tool MCP| C[MCP Server no SAP BTP]
-    C -->|consulta OData| D[SAP S/4HANA]
-    D -->|dados reais| C
-    C -->|resposta estruturada| B
+    B -->|stdio MCP| C[mcp-stdio.js local]
+    C -->|HTTP POST /mcp/call| D[MCP Server no SAP BTP]
+    D -->|consulta OData| E[SAP S/4HANA]
+    E -->|dados reais| D
+    D -->|JSON estruturado| C
+    C -->|resposta MCP| B
     B -->|responde em português| A
 ```
 
-O servidor MCP fica hospedado no **SAP BTP Cloud Foundry** e funciona como uma ponte: recebe perguntas da IA, consulta a API do SAP e devolve os dados formatados.
+A arquitetura tem duas camadas:
+- **`mcp-stdio.js`** — roda localmente, faz a ponte entre o Claude Desktop (protocolo MCP stdio) e o servidor no BTP
+- **MCP Server no BTP** — hospedado no SAP BTP Cloud Foundry, consulta a API OData do SAP S/4HANA
 
 ---
 
 ## Exemplos de Perguntas que Já Funcionam
 
 ```
-"Liste as últimas 5 ordens de manutenção da planta 1710"
+"Is there any order related to a leak? What is planned to fix it?"
 
-"Qual o status da ordem 4000300?"
+"I have a meeting now about the EDDY Pumps. Give me a quick summary of all open orders for them."
 
-"Mostre as operações planejadas para a ordem 4000291"
+"Which orders have priority 1 in plant 1010?"
 
-"Quais ordens do tipo YA02 estão abertas?"
+"Equipment 10001949 — does it have more than one open order? Show me all of them."
 
-"Detalhe a ordem de manutenção do equipamento 217100091"
+"What is the detailed status of order 4000300?"
 ```
 
 ---
@@ -159,16 +162,45 @@ A API Key é obtida gratuitamente no [SAP Business Accelerator Hub](https://api.
 
 ## Conectar ao Claude Desktop
 
-Adicione no `claude_desktop_config.json`:
+O Claude Desktop se comunica via protocolo **MCP stdio** (JSON-RPC 2.0). Como o servidor principal roda no BTP via HTTP, este repositório inclui o arquivo `mcp-stdio.js` — um proxy local que faz a ponte entre os dois.
+
+**Passo 1 — garantir que o app está rodando no BTP:**
+
+```bash
+cf start mcp-maintenance-cap
+```
+
+**Passo 2 — configurar o Claude Desktop.**
+
+Abra `%APPDATA%\Claude\claude_desktop_config.json` e adicione a entrada `sap-maintenance`:
 
 ```json
 {
   "mcpServers": {
     "sap-maintenance": {
-      "url": "https://mcp-maintenance-cap.cfapps.us10-001.hana.ondemand.com"
+      "command": "node",
+      "args": [
+        "C:\\caminho\\para\\mcp-maintenance-cap\\mcp-stdio.js"
+      ]
     }
   }
 }
+```
+
+**Passo 3 — reiniciar o Claude Desktop.** O ícone de ferramentas (hammer) aparecerá indicando que o servidor MCP foi carregado.
+
+**Exemplos de perguntas que funcionam depois da conexão:**
+
+```
+"Tenho uma reunião agora sobre os EDDY PUMPs. Me dê um resumo das ordens abertas."
+
+"Quais ordens são de prioridade 1 na planta 1010?"
+
+"O equipamento 10001949 tem mais de uma ordem aberta? Me mostre todas."
+
+"Existe alguma ordem relacionada a vazamento? O que está planejado?"
+
+"Qual o status detalhado da ordem 4000300?"
 ```
 
 ---
@@ -187,5 +219,11 @@ O CAP exige ao menos um `.cds` para inicializar. Solução: `DummyService` míni
 
 ### 4. API Key fora do repositório
 `manifest.yml` vai para o repo com `SAP_API_KEY: ""`. A chave real é configurada via `cf set-env` após o deploy.
+
+### 5. Claude Desktop não suporta HTTP direto — precisa de proxy stdio
+O Claude Desktop se comunica com servidores MCP exclusivamente via **stdio** (processo local, JSON-RPC 2.0 por stdin/stdout). Não é possível apontar diretamente para uma URL HTTP no `claude_desktop_config.json`. A solução foi criar `mcp-stdio.js`: um script Node.js leve que o Claude Desktop spawna localmente e que encaminha cada chamada de tool para o endpoint `/mcp/call` do servidor no BTP. Dessa forma o servidor deployado não precisa mudar.
+
+### 6. Protocolo MCP requer métodos específicos
+O handshake do Claude Desktop espera três métodos em sequência: `initialize` (negociação de versão e capacidades), `tools/list` (schema de cada tool) e `tools/call` (execução). O servidor HTTP original expunha apenas rotas REST customizadas — o `mcp-stdio.js` implementa esses três métodos e traduz para chamadas HTTP ao BTP.
 
 </details>
