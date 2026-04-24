@@ -17,7 +17,7 @@ Two real examples of Claude Desktop answering live SAP S/4HANA data — no scree
 
 ### Example 1 — Summary before a meeting
 
-<video src="https://github.com/bernardcaldas/mcp-maintenance-cap/raw/main/video-1-claude%20-%20meeting%20summary.mp4" controls width="100%"></video>
+https://github.com/bernardcaldas/mcp-maintenance-cap/raw/main/video-1-claude%20-%20meeting%20summary.mp4
 
 > *"I have a meeting right now about the EDDY Pumps. Give me a quick summary of all open orders for them."*
 
@@ -27,7 +27,7 @@ The assistant queries SAP and delivers a structured summary — equipment, statu
 
 ### Example 2 — Investigating a leak
 
-<video src="https://github.com/bernardcaldas/mcp-maintenance-cap/raw/main/video%202%20-%20claude%20-%20orders%20leak.mp4" controls width="100%"></video>
+https://github.com/user-attachments/assets/586be198-44f7-4c19-b143-fb5e7224ad95
 
 > *"Is there any order related to an oil leak? What is planned to fix it?"*
 
@@ -79,14 +79,6 @@ This is a fully working proof of concept. The same architecture applies to any S
 
 ---
 
-## Services I Offer
-
-If you're from an SAP consultancy or a company looking to explore this capability:
-
-- **Proof of concept** — a working MCP Server integrated with your SAP module in a few days
-- **Integration with Claude Desktop, Copilot, or other MCP clients** — the end user works with the AI they already know
-- **Deploy on SAP BTP or client infrastructure** — secure, data stays within the controlled environment
-- **Expansion to multiple modules** — once the architecture is in place, adding new data is fast
 
 > Interested? Reach out: **bernardo.acaldas@gmail.com**
 
