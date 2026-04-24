@@ -1,8 +1,8 @@
-# SAP Maintenance Orders — Consulta por Linguagem Natural com IA
+# SAP Maintenance Orders — Natural Language Queries with AI
 
-> Imagine perguntar ao seu assistente de IA: *"Tenho uma reunião agora sobre os EDDY Pumps — me dê um resumo das ordens abertas."* — e receber a resposta direto do SAP, em segundos, sem abrir nenhuma transação.
+> Imagine asking your AI assistant: *"I have a meeting right now about the EDDY Pumps — give me a quick summary of all open orders."* — and getting the answer straight from SAP, in seconds, without opening a single transaction.
 
-**É exatamente isso que este projeto faz.**
+**That's exactly what this project does.**
 
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?logo=node.js&logoColor=white)
 ![SAP BTP](https://img.shields.io/badge/SAP%20BTP-Cloud%20Foundry-0070F2?logo=sap&logoColor=white)
@@ -11,121 +11,123 @@
 
 ---
 
-## Resultado
+## See It in Action
 
-Dois exemplos reais do Claude Desktop respondendo com dados ao vivo do SAP S/4HANA — sem abrir nenhuma tela, sem digitar filtros, sem conhecimento técnico do sistema.
+Two real examples of Claude Desktop answering live SAP S/4HANA data — no screens, no filters, no technical SAP knowledge required.
 
-### Exemplo 1 — Resumo antes de uma reunião
+### Example 1 — Summary before a meeting
 
 <video src="https://github.com/bernardcaldas/mcp-maintenance-cap/raw/main/video-1-claude%20-%20meeting%20summary.mp4" controls width="100%"></video>
 
-> *"Tenho uma reunião agora sobre os EDDY Pumps. Me dê um resumo rápido de todas as ordens abertas para eles."*
+> *"I have a meeting right now about the EDDY Pumps. Give me a quick summary of all open orders for them."*
 
-O assistente consulta o SAP e entrega um resumo estruturado — equipamento, status, prioridade — pronto para levar à reunião.
+The assistant queries SAP and delivers a structured summary — equipment, status, priority — ready to take into the meeting.
 
 ---
 
-### Exemplo 2 — Investigando um vazamento
+### Example 2 — Investigating a leak
 
 <video src="https://github.com/bernardcaldas/mcp-maintenance-cap/raw/main/video%202%20-%20claude%20-%20orders%20leak.mp4" controls width="100%"></video>
 
-> *"Existe alguma ordem relacionada a vazamento de óleo? O que está planejado para resolver?"*
+> *"Is there any order related to an oil leak? What is planned to fix it?"*
 
-O assistente encontra as ordens relevantes e descreve o que está planejado nas operações — sem o usuário precisar saber nenhum código de transação SAP.
-
----
-
-## O Problema que Resolve
-
-Gestores, coordenadores e técnicos precisam de informações do SAP todos os dias. Para isso, hoje precisam:
-
-- Ter acesso ao SAP GUI ou Fiori
-- Conhecer a transação certa (IW38, IW39...)
-- Saber configurar filtros e navegar pelas telas
-
-**Resultado:** informação travada atrás de um sistema complexo, dependência de perfis técnicos para consultas simples, tempo perdido.
-
-Com este projeto, qualquer pessoa pode consultar esses dados em linguagem natural — sem treinamento, sem telas, sem filtros.
+The assistant finds the relevant orders and describes what is planned in the operations — without the user needing to know any SAP transaction code.
 
 ---
 
-## Mais Exemplos de Perguntas que Funcionam
+## The Problem It Solves
+
+Maintenance managers, coordinators, and field technicians need SAP data every day. To get it today, they must:
+
+- Have access to SAP GUI or Fiori
+- Know the right transaction (IW38, IW39...)
+- Know how to configure filters and navigate screens
+
+**The result:** information locked behind a complex system, dependency on technical profiles for simple queries, time wasted.
+
+With this project, anyone with access to the AI assistant can query that data in natural language — no training, no screens, no filters.
+
+---
+
+## More Questions That Already Work
 
 ```
-"Quais ordens têm prioridade 1 na planta 1010?"
+"Which orders have priority 1 in plant 1010?"
 
-"O equipamento 10001949 tem mais de uma ordem aberta? Me mostre todas."
+"Equipment 10001949 — does it have more than one open order? Show me all of them."
 
-"Qual o status detalhado da ordem 4000300?"
+"What is the detailed status of order 4000300?"
+
+"I have a meeting now about the EDDY Pumps. Give me a quick summary of all open orders for them."
 
 "Is there any order related to a leak? What is planned to fix it?"
 ```
 
 ---
 
-## O que Pode Ser Expandido
+## What Can Be Built With This Approach
 
-A mesma arquitetura funciona para qualquer módulo SAP:
+This is a fully working proof of concept. The same architecture applies to any SAP module:
 
-| Módulo | O que a IA poderia responder |
-|--------|------------------------------|
-| **PM** — Plant Maintenance | Ordens, equipamentos, histórico de falhas |
-| **MM** — Materials Management | Estoque, pedidos de compra, fornecedores |
-| **SD** — Sales & Distribution | Pedidos de venda, entregas, faturamento |
-| **QM** — Quality Management | Inspeções, notificações de qualidade |
-| **FI/CO** — Financeiro | Centros de custo, lançamentos, relatórios |
-
----
-
-## Serviços que Ofereço
-
-Se você é de uma consultoria SAP ou empresa que quer explorar essa capacidade:
-
-- **Prova de conceito** — MCP Server funcional integrado ao seu módulo SAP em poucos dias
-- **Integração com Claude Desktop, Copilot ou outros clientes MCP** — o usuário final usa a IA que já conhece
-- **Deploy no SAP BTP ou infraestrutura do cliente** — seguro, sem dados saindo do ambiente controlado
-- **Expansão para múltiplos módulos** — uma vez que a arquitetura está pronta, adicionar novos dados é rápido
-
-> Interessado? Entre em contato: **bernardo.acaldas@gmail.com**
+| Module | What the AI could answer |
+|--------|--------------------------|
+| **PM** — Plant Maintenance | Orders, equipment, failure history |
+| **MM** — Materials Management | Stock, purchase orders, suppliers |
+| **SD** — Sales & Distribution | Sales orders, deliveries, invoicing |
+| **QM** — Quality Management | Inspections, quality notifications |
+| **FI/CO** — Finance | Cost centers, postings, reports |
 
 ---
 
+## Services I Offer
+
+If you're from an SAP consultancy or a company looking to explore this capability:
+
+- **Proof of concept** — a working MCP Server integrated with your SAP module in a few days
+- **Integration with Claude Desktop, Copilot, or other MCP clients** — the end user works with the AI they already know
+- **Deploy on SAP BTP or client infrastructure** — secure, data stays within the controlled environment
+- **Expansion to multiple modules** — once the architecture is in place, adding new data is fast
+
+> Interested? Reach out: **bernardo.acaldas@gmail.com**
+
 ---
 
-## Referência Técnica
+---
 
-### Como Funciona
+## Technical Reference
+
+### How It Works
 
 ```mermaid
 flowchart LR
-    A[Usuário] -->|pergunta em português| B[Claude Desktop]
+    A[User] -->|natural language| B[Claude Desktop]
     B -->|stdio MCP| C[mcp-stdio.js local]
-    C -->|HTTP POST /mcp/call| D[MCP Server no SAP BTP]
-    D -->|consulta OData| E[SAP S/4HANA]
-    E -->|dados reais| D
-    D -->|JSON estruturado| C
-    C -->|resposta MCP| B
-    B -->|responde em português| A
+    C -->|HTTP POST /mcp/call| D[MCP Server on SAP BTP]
+    D -->|OData query| E[SAP S/4HANA]
+    E -->|real data| D
+    D -->|structured JSON| C
+    C -->|MCP response| B
+    B -->|answers in natural language| A
 ```
 
-Duas camadas:
-- **`mcp-stdio.js`** — roda localmente, faz a ponte entre o Claude Desktop (protocolo MCP stdio) e o servidor no BTP
-- **MCP Server no BTP** — hospedado no SAP BTP Cloud Foundry, consulta a API OData do SAP S/4HANA
+Two layers:
+- **`mcp-stdio.js`** — runs locally, bridges Claude Desktop (MCP stdio protocol) to the BTP server
+- **MCP Server on BTP** — hosted on SAP BTP Cloud Foundry, queries the SAP S/4HANA OData API
 
 ### Stack
 
-| Camada | Tecnologia |
-|--------|-----------|
+| Layer | Technology |
+|-------|-----------|
 | Framework | SAP CAP (Cloud Application Programming) |
-| Servidor | Node.js + Express |
-| Protocolo | MCP (Model Context Protocol) |
-| API SAP | OData REST via SAP Business Accelerator Hub |
-| Hospedagem | SAP BTP Cloud Foundry |
-| Cliente IA | Claude Desktop (Anthropic) |
+| Server | Node.js + Express |
+| Protocol | MCP (Model Context Protocol) |
+| SAP API | OData REST via SAP Business Accelerator Hub |
+| Hosting | SAP BTP Cloud Foundry |
+| AI Client | Claude Desktop (Anthropic) |
 
 ---
 
-### Rodar Localmente
+### Running Locally
 
 ```bash
 git clone https://github.com/bernardcaldas/mcp-maintenance-cap.git
@@ -134,7 +136,7 @@ npm install
 npm run dev
 ```
 
-Testar:
+Test it:
 
 ```bash
 curl -X POST http://localhost:4004/mcp/call \
@@ -144,32 +146,32 @@ curl -X POST http://localhost:4004/mcp/call \
 
 ---
 
-### Deploy no SAP BTP
+### Deploy on SAP BTP
 
 ```bash
 cf login -a https://api.cf.us10-001.hana.ondemand.com
 cf push mcp-maintenance-cap
-cf set-env mcp-maintenance-cap SAP_API_KEY "sua-chave-aqui"
+cf set-env mcp-maintenance-cap SAP_API_KEY "your-key-here"
 cf restart mcp-maintenance-cap
 ```
 
-A API Key é obtida gratuitamente no [SAP Business Accelerator Hub](https://api.sap.com).
+The API Key is available for free at [SAP Business Accelerator Hub](https://api.sap.com).
 
 ---
 
-### Conectar ao Claude Desktop
+### Connect to Claude Desktop
 
-O Claude Desktop se comunica via **MCP stdio** (JSON-RPC 2.0). O `mcp-stdio.js` incluído neste repositório é o proxy local que faz a ponte entre o Claude Desktop e o servidor no BTP.
+Claude Desktop communicates via **MCP stdio** (JSON-RPC 2.0). The `mcp-stdio.js` file included in this repository is the local proxy that bridges Claude Desktop to the BTP server.
 
-**Passo 1 — garantir que o app está rodando no BTP:**
+**Step 1 — make sure the app is running on BTP:**
 
 ```bash
 cf start mcp-maintenance-cap
 ```
 
-**Passo 2 — configurar o Claude Desktop.**
+**Step 2 — configure Claude Desktop.**
 
-Abra `%APPDATA%\Claude\claude_desktop_config.json` e adicione:
+Open `%APPDATA%\Claude\claude_desktop_config.json` and add:
 
 ```json
 {
@@ -177,36 +179,36 @@ Abra `%APPDATA%\Claude\claude_desktop_config.json` e adicione:
     "sap-maintenance": {
       "command": "node",
       "args": [
-        "C:\\caminho\\para\\mcp-maintenance-cap\\mcp-stdio.js"
+        "C:\\path\\to\\mcp-maintenance-cap\\mcp-stdio.js"
       ]
     }
   }
 }
 ```
 
-**Passo 3 — reiniciar o Claude Desktop.** O ícone de ferramentas (hammer) aparecerá confirmando que o servidor MCP foi carregado.
+**Step 3 — restart Claude Desktop.** The tools icon (hammer) will appear confirming the MCP server was loaded.
 
 ---
 
 <details>
-<summary><strong>Lições Aprendidas</strong></summary>
+<summary><strong>Lessons Learned</strong></summary>
 
-### 1. Não usar CDS service para expor rotas MCP
-O CAP adiciona prefixos OData nas rotas e serializa respostas no formato OData — incompatível com o protocolo MCP. A solução foi registrar rotas Express diretamente via `cds.on('bootstrap', app => ...)`.
+### 1. Don't use a CDS service to expose MCP routes
+CAP adds OData prefixes to routes and serializes responses in OData format — incompatible with the MCP protocol. The fix was to register Express routes directly via `cds.on('bootstrap', app => ...)`.
 
-### 2. Adicionar `express.json()` manualmente
-O CAP não registra esse middleware para rotas customizadas. Sem ele, `req.body` chega `undefined` mesmo com `Content-Type: application/json` no header.
+### 2. Add `express.json()` manually
+CAP does not register this middleware for custom routes. Without it, `req.body` arrives as `undefined` even with `Content-Type: application/json` in the header.
 
-### 3. Manter um arquivo .cds válido
-O CAP exige ao menos um `.cds` para inicializar. Solução: `DummyService` mínimo como placeholder.
+### 3. Keep a valid .cds file
+CAP requires at least one `.cds` file to initialize. Solution: a minimal `DummyService` as a placeholder.
 
-### 4. API Key fora do repositório
-`manifest.yml` vai para o repo com `SAP_API_KEY: ""`. A chave real é configurada via `cf set-env` após o deploy.
+### 4. API Key outside the repository
+`manifest.yml` is committed with `SAP_API_KEY: ""`. The real key is set via `cf set-env` after deploy.
 
-### 5. Claude Desktop não suporta HTTP direto — precisa de proxy stdio
-O Claude Desktop se comunica com servidores MCP exclusivamente via **stdio** (processo local, JSON-RPC 2.0 por stdin/stdout). Não é possível apontar diretamente para uma URL HTTP no `claude_desktop_config.json`. A solução foi criar `mcp-stdio.js`: um script Node.js leve que o Claude Desktop spawna localmente e que encaminha cada chamada de tool para o endpoint `/mcp/call` do servidor no BTP.
+### 5. Claude Desktop does not support direct HTTP — requires a stdio proxy
+Claude Desktop communicates with MCP servers exclusively via **stdio** (local process, JSON-RPC 2.0 over stdin/stdout). It is not possible to point directly to an HTTP URL in `claude_desktop_config.json`. The solution was to create `mcp-stdio.js`: a lightweight Node.js script that Claude Desktop spawns locally and that forwards each tool call to the `/mcp/call` endpoint on BTP.
 
-### 6. Protocolo MCP requer métodos específicos
-O handshake do Claude Desktop espera três métodos em sequência: `initialize` (negociação de versão e capacidades), `tools/list` (schema de cada tool) e `tools/call` (execução). O `mcp-stdio.js` implementa esses três métodos e traduz para chamadas HTTP ao BTP.
+### 6. MCP protocol requires specific methods
+The Claude Desktop handshake expects three methods in sequence: `initialize` (version and capability negotiation), `tools/list` (schema for each tool), and `tools/call` (execution). `mcp-stdio.js` implements these three methods and translates them into HTTP calls to BTP.
 
 </details>
