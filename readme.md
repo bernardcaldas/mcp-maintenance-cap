@@ -17,7 +17,7 @@ Dois exemplos reais do Claude Desktop respondendo com dados ao vivo do SAP S/4HA
 
 ### Exemplo 1 — Resumo antes de uma reunião
 
-<video src="video-1-claude%20-%20meeting%20summary.mp4" controls width="100%"></video>
+<video src="https://github.com/bernardcaldas/mcp-maintenance-cap/raw/main/video-1-claude%20-%20meeting%20summary.mp4" controls width="100%"></video>
 
 > *"Tenho uma reunião agora sobre os EDDY Pumps. Me dê um resumo rápido de todas as ordens abertas para eles."*
 
@@ -27,7 +27,7 @@ O assistente consulta o SAP e entrega um resumo estruturado — equipamento, sta
 
 ### Exemplo 2 — Investigando um vazamento
 
-<video src="video%202%20-%20claude%20-%20orders%20leak.mp4" controls width="100%"></video>
+<video src="https://github.com/bernardcaldas/mcp-maintenance-cap/raw/main/video%202%20-%20claude%20-%20orders%20leak.mp4" controls width="100%"></video>
 
 > *"Existe alguma ordem relacionada a vazamento de óleo? O que está planejado para resolver?"*
 
