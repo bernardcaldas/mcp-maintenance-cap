@@ -17,7 +17,7 @@ Two real examples of Claude Desktop answering live SAP S/4HANA data — no scree
 
 ### Example 1 — Summary before a meeting
 
-https://github.com/bernardcaldas/mcp-maintenance-cap/raw/main/video-1-claude%20-%20meeting%20summary.mp4
+https://github.com/user-attachments/assets/7c0151bf-a294-4459-b022-6bfdc0481b0d
 
 > *"I have a meeting right now about the EDDY Pumps. Give me a quick summary of all open orders for them."*
 
