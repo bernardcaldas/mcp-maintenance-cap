@@ -7,7 +7,7 @@
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?logo=node.js&logoColor=white)
 ![SAP BTP](https://img.shields.io/badge/SAP%20BTP-Cloud%20Foundry-0070F2?logo=sap&logoColor=white)
 ![SAP CAP](https://img.shields.io/badge/SAP%20CAP-8.x-0070F2?logo=sap&logoColor=white)
-![Status](https://img.shields.io/badge/status-live%20on%20BTP-brightgreen)
+![Status](https://img.shields.io/badge/status-proof%20of%20concept-blue)
 
 ---
 
@@ -57,10 +57,6 @@ With this project, anyone with access to the AI assistant can query that data in
 "Equipment 10001949 — does it have more than one open order? Show me all of them."
 
 "What is the detailed status of order 4000300?"
-
-"I have a meeting now about the EDDY Pumps. Give me a quick summary of all open orders for them."
-
-"Is there any order related to a leak? What is planned to fix it?"
 ```
 
 ---
@@ -79,10 +75,13 @@ This is a fully working proof of concept. The same architecture applies to any S
 
 ---
 
+## Feedback & Interest
 
-> Interested? Reach out: **bernardo.acaldas@gmail.com**
+This is a proof of concept — built to explore what becomes possible when SAP data meets AI assistants.
 
----
+If you tried it, have suggestions, spotted something to improve, or are curious about applying this to your context: feel free to reach out.
+
+**bernardo.acaldas@gmail.com**
 
 ---
 
